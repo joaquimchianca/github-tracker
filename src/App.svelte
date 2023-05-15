@@ -1,10 +1,24 @@
 <script lang="ts">
+    import BarraSuperior from "./components/BarraSuperior.svelte";
     import Titulo from "./components/Titulo.svelte";
+    import type IUsuario from "./interface/IUsuario";
 
     let value = ''
     function onSubmit() {
         console.log(value)
     }
+
+    let usuario: IUsuario = {
+      avatar: "https://github.com/joaquimchianca.png",
+      login: 'joaquimchianca',
+      name: 'Joaquim Chianca',
+      profilelUrl: 'https://github.com/joaquimchianca',
+      location: 'Natal, RN, Brazil',
+      repositorios: 50,
+      followers: 27
+    }
+
+
 </script>
 
 <div class="app">
@@ -21,6 +35,34 @@
             </form>
         </div>
     </header>
+
+    <div class="card__usuario">
+      <BarraSuperior />
+
+      <div class="usuario">
+        <div class="foto__container">
+          <a href={usuario.profilelUrl} target="_blank" rel="noopener">
+            <div class="foto__usuario"
+            style:background-image="url({usuario.avatar})">
+            </div>
+          </a>
+        </div>
+        <div class="detalhes__usuario">
+          <div class="info">
+            Nome: <span>{ usuario.name }</span>
+          </div>
+          <div class="info">
+            Usuário: <span>{usuario.login}</span>
+          </div>
+          <div class="info">
+            Seguidores: <span>{usuario.followers}</span>
+          </div>
+          <div class="info">
+            Repositórios: <span>{usuario.repositorios}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 
 <style>
@@ -86,6 +128,48 @@
 
   .botao:hover {
     background: #4590ff;
+  }
+
+  .card__usuario {
+    margin-top: 65px;
+  }
+
+  .usuario {
+    padding: 28px 0;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: -12px 37px 45px rgba(133,127,201,0.18);
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .foto__container {
+    margin-right: 81px;
+    margin-left: 15px;
+  }
+
+  .foto__usuario {
+    width: 10.75rem;
+    height: 10.75rem;
+    border: 4.56px solid #2e80fa;
+    border-radius: 50%;
+    background-size: cover;
+  }
+
+  .detalhes__usuario {
+    margin-right: 55px;
+  }
+
+  .detalhes__usuario > .info {
+    font-weight: 600px;
+    font-size: 20px;
+    line-height: 31px;
+    color: #395278;
+  }
+
+  .detalhes__usuario > .info > span {
+    color: #6781a8;
+    font-weight: normal;
   }
   
 </style>
