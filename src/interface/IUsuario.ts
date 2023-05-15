@@ -1,9 +1,9 @@
 export default interface IUsuario {
     login: string
     avatar: string
-    profilelUrl: string
+    profileUrl: string
     name: string
     location: string
-    repositorios: number
+    publicRepos: number
     followers: number
 }

@@ -1,16 +1,19 @@
 <script lang="ts">
     import type IUsuario from "../interface/IUsuario";
+    import Fa from 'svelte-fa/src/fa.svelte'
+    import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
 
     import BarraSuperior from "./BarraSuperior.svelte";
     export let usuario: IUsuario
 
 </script>
+
 <div class="card__usuario">
     <BarraSuperior />
       <div class="usuario">
         <div class="foto__container">
-          <a href={usuario.profilelUrl} target="_blank" rel="noopener">
+          <a href={usuario.profileUrl} target="_blank" rel="noopener">
             <div
               class="foto__usuario"
               style:background-image="url({usuario.avatar})"
@@ -19,16 +22,19 @@
         </div>
         <div class="detalhes__usuario">
           <div class="info">
-            Nome: <span>{usuario.name}</span>
+            <span>{usuario.name}</span>
           </div>
           <div class="info">
-            Usuário: <span>{usuario.login}</span>
+            <Fa icon={faGithub}/> <span>{usuario.login}</span>
+          </div>
+          <div class="info strings">
+            <span>{usuario.location}</span>
           </div>
           <div class="info">
             Seguidores: <span>{usuario.followers}</span>
           </div>
           <div class="info">
-            Repositórios: <span>{usuario.repositorios}</span>
+            Repositórios: <span>{usuario.publicRepos}</span>
           </div>
         </div>
       </div>
@@ -75,5 +81,9 @@
   .detalhes__usuario > .info > span {
     color: #6781a8;
     font-weight: normal;
+  }
+
+  .strings {
+    margin-bottom: 15px;
   }
   </style>

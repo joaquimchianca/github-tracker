@@ -4,16 +4,19 @@
   import type IUsuario from "./interface/IUsuario";
 
   let value = "";
-  function onSubmit() {
+  async function onSubmit() {
+    const responseUser = await fetch(`https://api.github.com/users/${value}`)
+    const userJson = await responseUser.json()
+
     usuario = {
-      avatar: "https://github.com/joaquimchianca.png",
-      login: "joaquimchianca",
-      name: "Joaquim Chianca",
-      profilelUrl: "https://github.com/joaquimchianca",
-      location: "Natal, RN, Brazil",
-      repositorios: 50,
-      followers: 27,
-    };
+      avatar: userJson.avatar_url,
+      followers: userJson.followers,
+      location: userJson.location,
+      login: userJson.login,
+      name: userJson.name,
+      profileUrl: userJson.html_url,
+      publicRepos: userJson.public_repos
+     }
   }
 
   let usuario: IUsuario | null = null;
@@ -25,7 +28,7 @@
 
     <div class="busca__usuario">
       <form on:submit|preventDefault={onSubmit}>
-        <input type="text" class="input" bind:value />
+        <input type="text" class="input" bind:value placeholder="Pesquise" />
 
         <div class="botao__container">
           <button type="submit" class="botao">Buscar</button>
