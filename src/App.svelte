@@ -1,25 +1,17 @@
 <script lang="ts">
-  import Formulario from "./components/Formulario.svelte";
-import Titulo from "./components/Titulo.svelte";
+  import Cabecalho from "./components/Cabecalho.svelte";
   import Usuario from "./components/Usuario.svelte";
   import type IUsuario from "./interface/IUsuario";
 
   let usuario: IUsuario | null = null;
 
-  function defineUser(e: CustomEvent<IUsuario>) {
-    usuario = e.detail
+  function defineUser(e: CustomEvent<IUsuario | null>) {
+    usuario = e.detail;
   }
-
 </script>
 
 <div class="app">
-  <header>
-    <Titulo />
-
-    <div class="busca__usuario">
-      <Formulario on:changeUser={defineUser}/>
-    </div>
-  </header>
+  <Cabecalho on:changeUser={defineUser} />
 
   {#if usuario}
     <Usuario {usuario} />
@@ -30,18 +22,4 @@ import Titulo from "./components/Titulo.svelte";
   .app {
     max-height: 100vh;
   }
-
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .busca__usuario {
-    position: relative;
-    width: 70%;
-  }
-
-
-
 </style>

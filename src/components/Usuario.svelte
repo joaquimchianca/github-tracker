@@ -35,10 +35,10 @@
           </div>
           {/if}
           <div class="info strings">
-            Followers: <span>{usuario.followers}</span>
+            <strong>Followers:</strong> <span>{usuario.followers}</span>
           </div>
           <div class="info">
-            Public Repos: <span>{usuario.publicRepos}</span>
+            <strong>Public Repos:</strong> <span>{usuario.publicRepos}</span>
           </div>
         </div>
       </div>

@@ -1,43 +1,49 @@
 <!-- TS -->
 <script lang="ts">
-    import { createEventDispatcher } from "svelte/types/runtime/internal/lifecycle";
-    import type IUsuario from "../interface/IUsuario";
+  import { createEventDispatcher } from "svelte";
+  import type IUsuario from "../interface/IUsuario";
 
-    
-    let value = "";
-    const dispatch = createEventDispatcher<{changeUser: IUsuario}>()
-    async function onSubmit() {
-        const responseUser = await fetch(
-            `https://api.github.com/users/${value}`
-        );
-        const userJson = await responseUser.json();
+  let status: null | number = null;
+  let value = "";
+  const dispatch = createEventDispatcher<{ changeUser: IUsuario | null }>();
 
-        dispatch('changeUser', {
-            avatar: userJson.avatar_url,
-            followers: userJson.followers,
-            location: userJson.location,
-            login: userJson.login,
-            name: userJson.name,
-            profileUrl: userJson.html_url,
-            publicRepos: userJson.public_repos,
-        })
+  async function onSubmit() {
+    const responseUser = await fetch(`https://api.github.com/users/${value}`);
+    if (responseUser.ok) {
+      const userJson = await responseUser.json();
 
-        
+      dispatch("changeUser", {
+        avatar: userJson.avatar_url,
+        followers: userJson.followers,
+        location: userJson.location,
+        login: userJson.login,
+        name: userJson.name,
+        profileUrl: userJson.html_url,
+        publicRepos: userJson.public_repos,
+      });
+      status = null;
+    } else {
+      status = responseUser.status;
+      dispatch("changeUser", null);
     }
+  }
 </script>
+
 <!-- HTML -->
 
 <form on:submit|preventDefault={onSubmit}>
-    <input type="text" class="input" bind:value placeholder="Pesquise" />
+  <input type="text" class="input" bind:value placeholder="Type here" class:erro__input={status === 404}/>
 
-    <div class="botao__container">
-        <button type="submit" class="botao">Buscar</button>
-    </div>
+  <div class="botao__container">
+    <button type="submit" class="botao">Search</button>
+  </div>
 </form>
+{#if status === 404}
+  <span class="erro">Github user not found!</span>
+{/if}
 
 <!-- CSS -->
 <style>
-
   .input {
     padding: 15px 25px;
     width: cal(100% - 8.75rem);
@@ -85,5 +91,20 @@
 
   .botao:hover {
     background: #4590ff;
+  }
+
+  .erro {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 19px;
+    z-index: -1;
+    color: #ff003e;
+  }
+
+  .erro__input {
+    border: 1px solid #ff003e;
   }
 </style>
