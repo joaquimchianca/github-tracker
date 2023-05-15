@@ -1,16 +1,18 @@
 <!-- TS -->
 <script lang="ts">
+    import { createEventDispatcher } from "svelte/types/runtime/internal/lifecycle";
     import type IUsuario from "../interface/IUsuario";
 
-    export let usuario: IUsuario | null
+    
     let value = "";
+    const dispatch = createEventDispatcher<{changeUser: IUsuario}>()
     async function onSubmit() {
         const responseUser = await fetch(
             `https://api.github.com/users/${value}`
         );
         const userJson = await responseUser.json();
 
-        usuario = {
+        dispatch('changeUser', {
             avatar: userJson.avatar_url,
             followers: userJson.followers,
             location: userJson.location,
@@ -18,7 +20,9 @@
             name: userJson.name,
             profileUrl: userJson.html_url,
             publicRepos: userJson.public_repos,
-        };
+        })
+
+        
     }
 </script>
 <!-- HTML -->

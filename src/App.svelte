@@ -5,6 +5,11 @@ import Titulo from "./components/Titulo.svelte";
   import type IUsuario from "./interface/IUsuario";
 
   let usuario: IUsuario | null = null;
+
+  function defineUser(e: CustomEvent<IUsuario>) {
+    usuario = e.detail
+  }
+
 </script>
 
 <div class="app">
@@ -12,7 +17,7 @@ import Titulo from "./components/Titulo.svelte";
     <Titulo />
 
     <div class="busca__usuario">
-      <Formulario bind:usuario/>
+      <Formulario on:changeUser={defineUser}/>
     </div>
   </header>
 
