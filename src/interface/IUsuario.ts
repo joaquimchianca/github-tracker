@@ -1,3 +1,5 @@
+import type IRepository from "./IRepository"
+
 export default interface IUsuario {
     login: string
     avatar: string
@@ -6,4 +8,5 @@ export default interface IUsuario {
     location: string
     publicRepos: number
     followers: number
+    repositories: IRepository[]
 }
