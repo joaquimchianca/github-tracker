@@ -21,16 +21,20 @@
           </a>
         </div>
         <div class="detalhes__usuario">
+        {#if usuario.name}
           <div class="info">
             <span>{usuario.name}</span>
           </div>
+          {/if}
           <div class="info">
             <Fa icon={faGithub}/> <span>{usuario.login}</span>
           </div>
-          <div class="info strings">
+          {#if usuario.location}
+          <div class="info">
             <span>{usuario.location}</span>
           </div>
-          <div class="info">
+          {/if}
+          <div class="info strings">
             Seguidores: <span>{usuario.followers}</span>
           </div>
           <div class="info">
@@ -84,6 +88,6 @@
   }
 
   .strings {
-    margin-bottom: 15px;
+    margin-top: 15px;
   }
   </style>
