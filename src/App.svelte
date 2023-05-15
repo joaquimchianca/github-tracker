@@ -1,55 +1,54 @@
 <script lang="ts">
-    import BarraSuperior from "./components/BarraSuperior.svelte";
-    import Titulo from "./components/Titulo.svelte";
-    import type IUsuario from "./interface/IUsuario";
+  import BarraSuperior from "./components/BarraSuperior.svelte";
+  import Titulo from "./components/Titulo.svelte";
+  import type IUsuario from "./interface/IUsuario";
 
-    let value = ''
-    function onSubmit() {
-        console.log(value)
-    }
-
-    let usuario: IUsuario = {
+  let value = "";
+  function onSubmit() {
+    usuario = {
       avatar: "https://github.com/joaquimchianca.png",
-      login: 'joaquimchianca',
-      name: 'Joaquim Chianca',
-      profilelUrl: 'https://github.com/joaquimchianca',
-      location: 'Natal, RN, Brazil',
+      login: "joaquimchianca",
+      name: "Joaquim Chianca",
+      profilelUrl: "https://github.com/joaquimchianca",
+      location: "Natal, RN, Brazil",
       repositorios: 50,
-      followers: 27
+      followers: 27,
     }
+  }
 
-
+  let usuario: IUsuario = null;
 </script>
 
 <div class="app">
-    <header>
-        <Titulo/>
+  <header>
+    <Titulo />
 
-        <div class="busca__usuario">
-            <form on:submit|preventDefault={onSubmit}>
-                <input type="text" class="input" bind:value>
+    <div class="busca__usuario">
+      <form on:submit|preventDefault={onSubmit}>
+        <input type="text" class="input" bind:value />
 
-                <div class="botao__container">
-                    <button type="submit" class="botao" >Buscar</button>
-                </div>
-            </form>
+        <div class="botao__container">
+          <button type="submit" class="botao">Buscar</button>
         </div>
-    </header>
+      </form>
+    </div>
+  </header>
 
-    <div class="card__usuario">
-      <BarraSuperior />
-
+  <div class="card__usuario">
+    <BarraSuperior />
+    {#if usuario}
       <div class="usuario">
         <div class="foto__container">
           <a href={usuario.profilelUrl} target="_blank" rel="noopener">
-            <div class="foto__usuario"
-            style:background-image="url({usuario.avatar})">
-            </div>
+            <div
+              class="foto__usuario"
+              style:background-image="url({usuario.avatar})"
+            />
           </a>
         </div>
         <div class="detalhes__usuario">
           <div class="info">
-            Nome: <span>{ usuario.name }</span>
+            Nome: <span>{usuario.name}</span>
           </div>
           <div class="info">
             Usuário: <span>{usuario.login}</span>
@@ -62,7 +61,8 @@
           </div>
         </div>
       </div>
-    </div>
+    {/if}
+  </div>
 </div>
 
 <style>
@@ -137,7 +137,7 @@
   .usuario {
     padding: 28px 0;
     background: rgba(255, 255, 255, 0.5);
-    box-shadow: -12px 37px 45px rgba(133,127,201,0.18);
+    box-shadow: -12px 37px 45px rgba(133, 127, 201, 0.18);
 
     display: flex;
     justify-content: center;
@@ -171,5 +171,4 @@
     color: #6781a8;
     font-weight: normal;
   }
-  
 </style>
