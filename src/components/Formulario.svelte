@@ -15,7 +15,6 @@
     if (responseUser.ok) {
       const userJson = await responseUser.json();
       const reposJson = await responseRepos.json()
-      console.log(reposJson.length)
       dispatch("changeUser", mountUser(userJson, reposJson));
       status = null;
     } else {
