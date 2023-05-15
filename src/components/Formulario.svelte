@@ -2,25 +2,21 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import type IUsuario from "../interface/IUsuario";
+  import { searchRepos, searchUser } from "../requisicoes";
+    import { mountUser } from "../utils/mountUser";
 
   let status: null | number = null;
   let value = "";
   const dispatch = createEventDispatcher<{ changeUser: IUsuario | null }>();
 
   async function onSubmit() {
-    const responseUser = await fetch(`https://api.github.com/users/${value}`);
+    const responseUser = await searchUser(value)
+    const responseRepos = await searchRepos(value)
     if (responseUser.ok) {
       const userJson = await responseUser.json();
-
-      dispatch("changeUser", {
-        avatar: userJson.avatar_url,
-        followers: userJson.followers,
-        location: userJson.location,
-        login: userJson.login,
-        name: userJson.name,
-        profileUrl: userJson.html_url,
-        publicRepos: userJson.public_repos,
-      });
+      const reposJson = await responseRepos.json()
+      console.log(reposJson.length)
+      dispatch("changeUser", mountUser(userJson, reposJson));
       status = null;
     } else {
       status = responseUser.status;
