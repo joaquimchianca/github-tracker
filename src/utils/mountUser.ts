@@ -5,11 +5,11 @@ function mountUser(userJson: any, reposJson: any): IUsuario {
     const recentRepos: IRepository[] = []
 
     if(reposJson.length !== 0 ) {
-        reposJson.forEach(element => {
+        reposJson.forEach((element: any) => {
             recentRepos.push({
-                name: reposJson.name,
-                url: reposJson.html_url,
-                language: reposJson.language
+                name: element.name,
+                url: element.html_url,
+                language: element.language
             })
         });
     }

@@ -40,6 +40,20 @@
                 <span>{usuario.publicRepos}</span>
             </div>
         </div>
+        <div class="repositorios">
+            <div class="repositorio__titulo">
+                <strong>Repositórios recentes:</strong>
+            </div>
+            {#each usuario.repositories as repositorio}
+            <div class="repositorio">
+                <a href={repositorio.url}
+                target="_blank"
+                rel="noopener">
+                {repositorio.name} {#if repositorio.language !== null}({repositorio.language}) {/if}
+                </a>
+            </div>
+            {/each}
+        </div>
     </div>
 </div>
 
@@ -76,7 +90,7 @@
     }
 
     .detalhes__usuario > .info {
-        font-weight: 600px;
+        font-weight: 600;
         font-size: 20px;
         line-height: 31px;
         color: #395278;
@@ -89,5 +103,21 @@
 
     .strings {
         margin-top: 15px;
+    }
+
+    .repositorio__titulo {
+        margin-bottom: 10px;
+    }
+
+    .repositorio__titulo > strong {
+        font-weight: 600;
+        font-size: 18px;
+        color: #395278;
+    }
+
+    .repositorio > a {
+        line-height: 28px;
+        color: #6781a8;
+        font-size: 16px;
     }
 </style>
